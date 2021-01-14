@@ -44,15 +44,26 @@ module.exports = function(eleventyConfig) {
         return md.render(value)
     })
 
+    eleventyConfig.addShortcode(
+        'debug',
+        (value) =>
+        `<pre style="padding: 100px 0; font-size: 14px; font-family: monospace;">${JSON.stringify(
+          value,
+          null,
+          2,
+        )}</pre>`,
+    )
+
     // human readable date
     eleventyConfig.addFilter("readableDate", (dateObj) => {
         return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat(
             "dd LLL yyyy"
         );
     });
-    eleventyConfig.addWatchTarget("./src/assets/");
 
-    eleventyConfig.addPassthroughCopy("./src/assets/");
+    eleventyConfig.addWatchTarget("./src/assets");
+
+    eleventyConfig.addPassthroughCopy({ './src/assets': '/assets' })
 
     return {
         templateFormats: [
@@ -73,9 +84,10 @@ module.exports = function(eleventyConfig) {
         dataTemplateEngine: "njk",
         passthroughFileCopy: true,
         dir: {
-            input: "src",
-            includes: "_includes",
-            data: "_data",
+            input: 'src/templates',
+            data: '../_data',
+            includes: 'includes',
+            layouts: 'layouts',
             output: "dist"
         }
     };

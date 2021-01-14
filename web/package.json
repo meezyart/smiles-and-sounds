@@ -6,6 +6,7 @@
     "scripts": {
         "clean-me": "rimraf dist",
         "build": "npx eleventy",
+        "dev:eleventy": "npx eleventy --watch --serve --quiet",
         "dev": "npx eleventy --watch --serve --quiet",
         "now-build": "npm run build",
         "debug": "DEBUG=* eleventy"
