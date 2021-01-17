@@ -1,0 +1,12 @@
+.DS_Store
+.github/
+.netlify/
+dist/
+node_modules/
+package-lock.json
+README.md
+_11ty/
+functions
+test
+
+

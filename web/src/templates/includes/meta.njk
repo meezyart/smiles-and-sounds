@@ -1,0 +1,50 @@
+{%- set absolutePageUrl -%}{{ page.url | url | absoluteUrl(metaData.url) }}{%- endset -%}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- General  -->
+    <title>{{ renderData.title or title or metaData.title | escape }}</title>
+    <meta property="og:title" content="{{ renderData.title or title or metaData.title | escape  }}">
+{%- set desc = renderData.description or description -%}
+    {%- if not desc -%}
+      {%- set desc = content | striptags | truncate(140) -%}
+    {%- endif -%}
+    {%- if desc -%}
+    <meta name="description" content="{{ desc | escape  }}">
+    <meta property="og:description" content="{{ desc | escape }}">
+    {%- endif -%}
+    <meta name="keywords" content="{{ metaData.keywords  }}" />
+    <!-- CSP -->
+    <meta http-equiv="Content-Security-Policy" content="{{ csp.regular | safe }}">
+    <meta name="theme-color" content="{{ metaData.themeColor }}">
+    <meta name="robots" content="max-snippet:-1, max-image-preview: large, max-video-preview: -1">
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="{{ metaData.title }}">
+    <meta property="og:title" content="{{ renderData.title or title or metaData.title | escape  }}">
+    <meta property="og:url" content="{{ absolutePageUrl }}">
+    <meta property="og:locale" content="{{ metaData.locale }}">
+    <meta name="twitter:card" content="{% if image -%}summary_large_image{% else %}summary{% endif %}">
+    {%- if image -%}
+        <meta property="og:image" content="{{ image | url | absoluteUrl(metaData.url) }}">
+    {%- endif -%}
+    <link rel="canonical" href="{{ absolutePageUrl }}">
+    <link rel="preconnect" href="/" crossorigin>
+    <!-- Notably iOS UAs also contain Mac OS X -->
+    <script csp-hash>if (/Mac OS X/.test(navigator.userAgent))document.documentElement.classList.add('apple')
+    </script>
+    <link rel="manifest" href="{{ '/site.webmanifest' | url }}" >
+     {# <!-- This is a blog and so it SHOULD be safe and it is nice for the web
+      to send referrers cross-origin.
+      However, if you use sensitive data in URLs, consider changing this to
+      a value like `origin-when-cross-origin`
+      https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
+      --> -#}
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    {# RSS Feed -#}
+    <link type="application/atom+xml" rel="alternate" href="{{ metaData.feed.path | url }}" title="{{ metaData.title }}">
+    <!-- css is inserted by optimize-html custom plugin -->
+    {%- set css -%}
+      {%- include "style.css" -%}
+    {%- endset %}
+    <style>
+      {{ css | cssmin | safe }}
+    </style>

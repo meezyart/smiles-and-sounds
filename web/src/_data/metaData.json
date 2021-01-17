@@ -1,0 +1,28 @@
+{
+    "title": "Title of the website. Update me.",
+    "description": "Description of the website. Update me.",
+    "lang": "en",
+    "locale": "en_us",
+    "domain": "https://smiles-and-sounds.netlify.app",
+    "genre": "Insert a schema.org genre",
+    "googleAnalyticsId": "GA ID. Update me",
+    "sendWebVitals": false,
+    "themeColor": "#f9c412",
+    "feed": {
+        "subtitle": "Subtitle. Update me.",
+        "filename": "feed.xml",
+        "path": "/feed/feed.xml",
+        "id": "https://smiles-and-sounds.netlify.app"
+    },
+    "jsonfeed": {
+        "path": "/feed/feed.json",
+        "url": "https://smiles-and-sounds.netlify.app/feed/feed.json"
+    },
+    "author": {
+        "name": "Author Name. Update me.",
+        "twitterHandle": "update_me"
+    },
+    "publisher": {
+        "name": "Publisher name. Update me."
+    }
+}
