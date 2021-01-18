@@ -1,9 +1,10 @@
-const pluginRss = require('@11ty/eleventy-plugin-rss')
-const pluginNavigation = require('@11ty/eleventy-navigation')
+const util = require('util');
 const { DateTime } = require("luxon");
 const { promisify } = require("util");
 const fs = require("fs");
 const hasha = require("hasha");
+const pluginRss = require('@11ty/eleventy-plugin-rss');
+const pluginNavigation = require('@11ty/eleventy-navigation');
 const readFile = promisify(fs.readFile);
 const stat = promisify(fs.stat);
 const execFile = promisify(require("child_process").execFile);
@@ -110,9 +111,9 @@ module.exports = function(eleventyConfig) {
     // eleventyConfig.addNunjucksAsyncShortcode('iconsprite', iconsprite)
 
 
-    // eleventyConfig.addFilter("debug", function(value) {
-    //     return util.inspect(value, { compact: false })
-    // });
+    eleventyConfig.addFilter("debug", function(value) {
+        return util.inspect(value, { compact: false })
+    });
 
     eleventyConfig.addFilter("readableDate", dateObj => {
         return new Date(dateObj).toDateString()

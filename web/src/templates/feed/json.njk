@@ -14,14 +14,15 @@ eleventyExcludeFromCollections: true
     "url": "{{ metaData.author.url }}"
   },
   "items": [
-    {%- for post in collections.posts | reverse %}
+    {%- for post in collections.myPosts | reverse %}
     {%- set absolutePostUrl %}{{ post.url | url | absoluteUrl(metaData.url) }}{% endset -%}
     {
       "id": "{{ absolutePostUrl }}",
       "url": "{{ absolutePostUrl }}",
-      "title": "{{ post.data.title }}",
-      "content_html": {% if post.templateContent %}{{ post.templateContent | dump | safe }}{% else %}""{% endif %},
-      "date_published": "{{ post.date | rssDate }}"
+      "author": "{{ post.data.authors[0].name }}",
+      "title": "{{ post.data.post.title  }}",
+      "content_html": {% if post.data.post.body %}{{ post.data.post.body | htmlToAbsoluteUrls(absolutePostUrl)  | markdownify | dump | safe }}{% else %}""{% endif %},
+      "date_published": "{{ post.data.post.publishedAt }}"
     }
     {%- if not loop.last -%}
     ,
