@@ -8,7 +8,7 @@ const pluginNavigation = require('@11ty/eleventy-navigation');
 const readFile = promisify(fs.readFile);
 const stat = promisify(fs.stat);
 const execFile = promisify(require("child_process").execFile);
-const GA_ID = require("./src/_data/metaData.js").googleAnalyticsId;
+// const GA_ID = require("./src/_data/metaData.js").googleAnalyticsId;
 
 
 const filters = require('./src/utils/filters.js')
