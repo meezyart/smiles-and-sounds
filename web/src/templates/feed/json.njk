@@ -1,0 +1,32 @@
+---
+# metaData comes from _data/metaData.json
+permalink: "{{ metaData.jsonfeed.path | url }}"
+eleventyExcludeFromCollections: true
+---
+{
+  "version": "https://jsonfeed.org/version/1",
+  "title": "{{ metaData.title }}",
+  "home_page_url": "{{ metaData.url }}",
+  "feed_url": "{{ metaData.jsonfeed.url }}",
+  "description": "{{ metaData.description }}",
+  "author": {
+    "name": "{{ metaData.author.name }}",
+    "url": "{{ metaData.author.url }}"
+  },
+  "items": [
+    {%- for post in collections.myPosts | reverse %}
+    {%- set absolutePostUrl %}{{ post.url | url | absoluteUrl(metaData.url) }}{% endset -%}
+    {
+      "id": "{{ absolutePostUrl }}",
+      "url": "{{ absolutePostUrl }}",
+      "author": "{{ post.data.authors[0].name }}",
+      "title": "{{ post.data.post.title  }}",
+      "content_html": {% if post.data.post.body %}{{ post.data.post.body | htmlToAbsoluteUrls(absolutePostUrl)  | markdownify | dump | safe }}{% else %}""{% endif %},
+      "date_published": "{{ post.data.post.publishedAt }}"
+    }
+    {%- if not loop.last -%}
+    ,
+    {%- endif -%}
+    {%- endfor %}
+  ]
+}

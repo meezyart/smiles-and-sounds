@@ -71,6 +71,5 @@ yarn.lock
 .env.development
 
 # Static site
-_site
-
 dist
+
