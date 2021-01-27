@@ -14,8 +14,9 @@
     {%- endif -%}
     <meta name="keywords" content="{{ metaData.keywords  }}" />
     <!-- CSP -->
-    <meta http-equiv="Content-Security-Policy" content="{{ csp.regular | safe }}">
+    {# <meta http-equiv="Content-Security-Policy" content="{{ csp.regular | safe }}"> #}
     <meta name="theme-color" content="{{ metaData.themeColor }}">
+    <meta name="author" content="{{ metaData.author }}">
     <meta name="robots" content="max-snippet:-1, max-image-preview: large, max-video-preview: -1">
     <!-- Open Graph -->
     <meta property="og:site_name" content="{{ metaData.title }}">
@@ -29,8 +30,8 @@
     <link rel="canonical" href="{{ absolutePageUrl }}">
     <link rel="preconnect" href="/" crossorigin>
     <!-- Notably iOS UAs also contain Mac OS X -->
-    <script csp-hash>if (/Mac OS X/.test(navigator.userAgent))document.documentElement.classList.add('apple')
-    </script>
+    {# <script csp-hash>if (/Mac OS X/.test(navigator.userAgent))document.documentElement.classList.add('apple')
+    </script> #}
     <link rel="manifest" href="{{ '/site.webmanifest' | url }}" >
      {# <!-- This is a blog and so it SHOULD be safe and it is nice for the web
       to send referrers cross-origin.
@@ -39,12 +40,12 @@
       https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
       --> -#}
     <meta name="referrer" content="no-referrer-when-downgrade">
-    {# RSS Feed -#}
+    <!--  RSS Feed -->
     <link type="application/atom+xml" rel="alternate" href="{{ metaData.feed.path | url }}" title="{{ metaData.title }}">
-    <!-- css is inserted by optimize-html custom plugin -->
-    {%- set css -%}
-      {%- include "style.css" -%}
-    {%- endset %}
-    <style>
-      {{ css | cssmin | safe }}
-    </style>
+
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- styles -->
+    <link href="{{ '/assets/css/plugins.css' | url }}" rel="stylesheet" type="text/css">
+    <link href="{{ '/assets/css/style.css' | url  }}" rel="stylesheet" type="text/css">

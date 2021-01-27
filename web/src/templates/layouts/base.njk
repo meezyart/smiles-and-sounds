@@ -3,17 +3,34 @@
   <head>
     {% include "meta.njk" -%}
   </head>
-  <body>
+  <body class=" dark-nav">
+    {%- block headerNav -%}
     {% include "header.njk" -%}
-    <main{% if templateClass %} class="{{ templateClass }}"{% endif %}>
-      {{ content | safe }}
+    {%- endblock %}
+    <main class="js-animsition-overlay {%- if templateClass %} {{ templateClass }} {% endif  -%}" data-animsition-overlay="true">
+     {%- block content %} {{ content | safe }} {% endblock -%}
     </main>
+    {%- if footerReveal != "false" %}
     {% include "footer.njk" -%}
+    {% endif -%}
     <!-- Current page: {{ page.url | url }} -->
     <script type="text/javascript">
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/serviceworker.js')
         }
     </script>
+    <!-- scripts -->
+    <script src="{{ '/assets/js/plugins.js' | url }}"></script>
+    {%- if footerReveal != "false" %}
+    <script src="{{ '/assets/js/footer-reveal.js' | url }}"></script>
+    {%- endif -%}
+    {%- for script in addtionaljs %}
+    <script src="{{ script | url }}"></script>
+    {%- endfor %}
+    {%- block addtionaljs %}{% endblock %}
+    <script src="{{ '/assets/js/main.js' | url }}"></script>
+    {%- if footerReveal != "false" %}
+    <script src="{{ '/assets/js/footer-reveal_init.js' | url }}"></script>
+    {%- endif -%}
   </body>
 </html>

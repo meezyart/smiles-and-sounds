@@ -1,5 +1,11 @@
 ---
 layout: base.njk
 templateClass: tmpl-home
+
 ---
-{{ content | safe }}
+
+{% include "hero/hero-slider.njk" %}
+{% include "home/about-us-slider.njk" %}
+{% include "media/youtube-sec.njk" %}
+{% include "home/photo-gallery-sec.njk" %}
+{% include "home/testimonal-sec.njk" %}

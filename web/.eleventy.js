@@ -28,7 +28,7 @@ module.exports = function(eleventyConfig) {
     //     verbose: false,
     // });
 
-    eleventyConfig.addPlugin(require("./_11ty/img-dim.js"));
+    // eleventyConfig.addPlugin(require("./_11ty/img-dim.js"));
     eleventyConfig.addPlugin(require("./_11ty/json-ld.js"));
     // eleventyConfig.addPlugin(require("./_11ty/optimize-html.js"));
     eleventyConfig.addPlugin(require("./_11ty/apply-csp.js"));
@@ -166,15 +166,15 @@ module.exports = function(eleventyConfig) {
     // watch targets
 
     eleventyConfig.addWatchTarget("./src/_data");
-    eleventyConfig.addWatchTarget("./src/templates");
+    eleventyConfig.addWatchTarget("./src/templates/");
     eleventyConfig.addWatchTarget("./src/utils");
     eleventyConfig.addWatchTarget("./_11ty");
+
 
     eleventyConfig.addPassthroughCopy({ './src/assets': '/assets' })
     eleventyConfig.addPassthroughCopy({ './src/_headers': '/_headers' })
 
-
-    // Browsersync Overrides
+    // // Browsersync Overrides
     eleventyConfig.setBrowserSyncConfig({
         callbacks: {
             ready: function(err, browserSync) {
@@ -191,13 +191,17 @@ module.exports = function(eleventyConfig) {
         ghostMode: false,
     });
 
+
+
+
+
     eleventyConfig.setDataDeepMerge(true);
 
     return {
         templateFormats: [
-            "md",
             "njk",
             "html",
+            "md",
             "liquid"
         ],
 
@@ -220,4 +224,5 @@ module.exports = function(eleventyConfig) {
         }
     };
 }
+
 11

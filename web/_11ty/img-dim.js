@@ -42,7 +42,7 @@ const processImage = async(img, outputPath) => {
         // resolve relative URL
         src =
             "/" +
-            path.relative("./dist/", path.resolve(path.dirname(outputPath), src));
+            path.relative("dist/", path.resolve(path.dirname(outputPath), src));
         if (path.sep == "\\") {
             src = src.replace(/\\/g, "/");
         }

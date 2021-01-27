@@ -1,0 +1,32 @@
+---
+permalink: 404.html
+footerReveal: false
+eleventyExcludeFromCollections: true
+---
+{% extends "../layouts/base.njk" -%}
+{%- block headerNav -%}{% endblock -%}
+{% block content %}
+	<!-- page head start -->
+			<section class="pos-rel section-bg-dark-2">
+				<!-- pos-rel start -->
+				<div class="pos-rel flex-min-height-100vh after-preloader-anim">
+					<div class="padding-top-bottom-120 container text-center">
+						<!-- title start -->
+						<h2 class="headline-xxxxl">
+							<span class="anim-text-fill text-color-red" data-text="404!">404!</span>
+						</h2><!-- title end -->
+						<p class="subhead-m anim-fade tr-delay-02">Page not found</p>
+					</div>
+					<div class="pos-abs pos-bottom-center width-100perc text-center">
+						<div class="anim-fade tr-delay-04">
+							<a href="/" class="border-btn js-pointer-large js-animsition-link">
+								<span class="border-btn__inner">Back to home</span>
+								<span class="border-btn__lines-1"></span>
+								<span class="border-btn__lines-2"></span>
+							</a>
+						</div>
+					</div>
+				</div><!-- pos-rel end -->
+			</section><!-- page head end -->
+{% endblock %}
+
