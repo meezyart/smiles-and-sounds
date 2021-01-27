@@ -3,7 +3,7 @@
     "name": "sanity-eleventy-blog",
     "version": "1.0.0",
     "scripts": {
-        "build": "lerna run build --parallel",
+        "build": "lerna run clean-me && lerna run build --parallel",
         "dev": "lerna run clean-me && lerna run dev --parallel",
         "format": "lerna run format",
         "build-studio": "lerna bootstrap && cd studio && npm run build",
