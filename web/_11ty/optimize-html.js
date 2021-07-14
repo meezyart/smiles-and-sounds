@@ -45,7 +45,7 @@ const purifyCss = async(rawContent, outputPath) => {
         !isAmp(content) &&
         !/data-style-override/.test(content)
     ) {
-        let before = require("fs").readFileSync("./dist/css/main.css", {
+        let before = require("fs").readFileSync("./dist/assets/css/style.css", {
             encoding: "utf-8",
         });
 

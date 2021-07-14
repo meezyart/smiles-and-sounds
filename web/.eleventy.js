@@ -3,12 +3,15 @@ const { DateTime } = require("luxon");
 const { promisify } = require("util");
 const fs = require("fs");
 const hasha = require("hasha");
-const pluginRss = require('@11ty/eleventy-plugin-rss');
-const pluginNavigation = require('@11ty/eleventy-navigation');
+const pluginRss = require("@11ty/eleventy-plugin-rss");
+const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const pluginNavigation = require("@11ty/eleventy-navigation");
+const localImages = require('eleventy-plugin-local-images');
+const CleanCSS = require("clean-css");
 const readFile = promisify(fs.readFile);
 const stat = promisify(fs.stat);
 const execFile = promisify(require("child_process").execFile);
-// const GA_ID = require("./src/_data/metaData.js").googleAnalyticsId;
+const GA_ID = require("./src/_data/metaData.js").googleAnalyticsId;
 
 
 const filters = require('./src/utils/filters.js')
@@ -18,19 +21,23 @@ const iconsprite = require('./src/utils/iconsprite.js')
 
 module.exports = function(eleventyConfig) {
 
+
     // Plugins
+    eleventyConfig.addPlugin(pluginSyntaxHighlight);
+    eleventyConfig.addPlugin(pluginNavigation);
     eleventyConfig.addPlugin(pluginRss)
+    eleventyConfig.addPlugin(localImages, {
+        distPath: "dist",
+        assetPath: "/assets/images/",
+        selector: "img,amp-img,amp-video,meta[property='og:image'],meta[name='twitter:image'],amp-story",
+        attribute: "src,srcset",
+        verbose: false,
+    });
 
-    // eleventyConfig.addPlugin(localImages, {
-    //     distPath: "dist",
-    //     assetPath: "/img/remote",
-    //     selector: "img,amp-img,amp-video,meta[property='og:image'],meta[name='twitter:image'],amp-story",
-    //     verbose: false,
-    // });
 
-    // eleventyConfig.addPlugin(require("./_11ty/img-dim.js"));
+    eleventyConfig.addPlugin(require("./_11ty/img-dim.js")); // dont use for now meez
     eleventyConfig.addPlugin(require("./_11ty/json-ld.js"));
-    // eleventyConfig.addPlugin(require("./_11ty/optimize-html.js"));
+    eleventyConfig.addPlugin(require("./_11ty/optimize-html.js"));
     eleventyConfig.addPlugin(require("./_11ty/apply-csp.js"));
 
 
@@ -49,7 +56,7 @@ module.exports = function(eleventyConfig) {
         eleventyConfig.addShortcode(shortcodeName, shortcodes[shortcodeName])
     })
 
-
+    eleventyConfig.setDataDeepMerge(true);
     // eleventyConfig.addLayoutAlias("post", "layouts/post.njk");
     eleventyConfig.addNunjucksAsyncFilter("addHash", function(
         absolutePath,
@@ -107,13 +114,17 @@ module.exports = function(eleventyConfig) {
         return encodeURIComponent(str);
     });
 
+    eleventyConfig.addFilter("cssmin", function(code) {
+        return new CleanCSS({}).minify(code).styles;
+    });
+
     // Icon Sprite
     // eleventyConfig.addNunjucksAsyncShortcode('iconsprite', iconsprite)
 
 
-    eleventyConfig.addFilter("debug", function(value) {
-        return util.inspect(value, { compact: false })
-    });
+    // eleventyConfig.addFilter("debug", function(value) {
+    //     return util.inspect(value, { compact: false })
+    // });
 
     eleventyConfig.addFilter("readableDate", dateObj => {
         return new Date(dateObj).toDateString()
@@ -125,10 +136,28 @@ module.exports = function(eleventyConfig) {
         );
     });
 
+    eleventyConfig.addFilter("sitemapDateTimeString", (dateObj) => {
+        const dt = DateTime.fromJSDate(dateObj, { zone: "utc" });
+        if (!dt.isValid) {
+            return "";
+        }
+        return dt.toISO();
+    });
+
 
     // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
     eleventyConfig.addFilter('htmlDateString', (dateObj) => {
         return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat('yyyy-LL-dd');
+    });
+
+
+    // Get the first `n` elements of a collection.
+    eleventyConfig.addFilter("head", (array, n) => {
+        if (n < 0) {
+            return array.slice(n);
+        }
+
+        return array.slice(0, n);
     });
 
     let markdownIt = require("markdown-it");
@@ -163,14 +192,17 @@ module.exports = function(eleventyConfig) {
         )}</pre>`,
     )
 
+
     // watch targets
 
     eleventyConfig.addWatchTarget("./src/_data");
+    eleventyConfig.addWatchTarget("./js/");
     eleventyConfig.addWatchTarget("./src/templates/");
     eleventyConfig.addWatchTarget("./src/utils");
     eleventyConfig.addWatchTarget("./_11ty");
 
-
+    // eleventyConfig.addPassthroughCopy(GA_ID ? "./src/ga/" : "ga/*[!cached].*");
+    eleventyConfig.addPassthroughCopy({ "./src/ga/": '/assets/js/ga/' });
     eleventyConfig.addPassthroughCopy({ './src/assets': '/assets' })
     eleventyConfig.addPassthroughCopy({ './src/_headers': '/_headers' })
 
@@ -195,7 +227,6 @@ module.exports = function(eleventyConfig) {
 
 
 
-    eleventyConfig.setDataDeepMerge(true);
 
     return {
         templateFormats: [

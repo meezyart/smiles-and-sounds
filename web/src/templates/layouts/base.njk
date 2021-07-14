@@ -24,6 +24,11 @@
     <script src="{{ script | url }}"></script>
     {%- endfor %}
     {%- block addtionaljs %}{% endblock %}
+    <script src="{{ '/assets/js/min.js' | url }}"></script>
+    {%- if GA_ID %}
+    <script src="{{ '/assets/js/cached.js' | url }}"></script>
+    <script src="{{ '/assets/js/web-vitals.js' | url }}"></script>
+    {% endif -%}
     <script src="{{ '/assets/js/main.js' | url }}"></script>
   </body>
 </html>
