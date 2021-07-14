@@ -1,9 +1,10 @@
 {%- set absolutePageUrl -%}{{ page.url | url | absoluteUrl(metaData.url) }}{%- endset -%}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- General  -->
+    <!-- General:Title  -->
     <title>{{ renderData.title or title or metaData.title | escape }}</title>
     <meta property="og:title" content="{{ renderData.title or title or metaData.title | escape  }}">
+    <!-- Desc  -->
 {%- set desc = renderData.description or description -%}
     {%- if not desc -%}
       {%- set desc = content | striptags | truncate(140) -%}
@@ -12,6 +13,7 @@
     <meta name="description" content="{{ desc | escape  }}">
     <meta property="og:description" content="{{ desc | escape }}">
     {%- endif -%}
+    <!-- Keyword  -->
     <meta name="keywords" content="{{ metaData.keywords  }}" />
     <!-- CSP -->
     {# <meta http-equiv="Content-Security-Policy" content="{{ csp.regular | safe }}"> #}
@@ -40,12 +42,7 @@
       https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
       --> -#}
     <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!--  RSS Feed -->
     <link type="application/atom+xml" rel="alternate" href="{{ metaData.feed.path | url }}" title="{{ metaData.title }}">
 
-    <!-- fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
-    <!-- styles -->
-    <link href="{{ '/assets/css/plugins.css' | url }}" rel="stylesheet" type="text/css">
-    <link href="{{ '/assets/css/style.css' | url  }}" rel="stylesheet" type="text/css">

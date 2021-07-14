@@ -8,6 +8,9 @@
     "googleAnalyticsId": "GA ID. Update me",
     "sendWebVitals": false,
     "themeColor": "#f9c412",
+    "favicon": {
+        "path": "/assets/images/favicon.png"
+    },
     "feed": {
         "subtitle": "Subtitle. Update me.",
         "filename": "feed.xml",
