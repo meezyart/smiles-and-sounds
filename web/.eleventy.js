@@ -196,6 +196,7 @@ module.exports = function(eleventyConfig) {
     // watch targets
 
     eleventyConfig.addWatchTarget("./src/_data");
+    eleventyConfig.addWatchTarget("./src/scss");
     eleventyConfig.addWatchTarget("./js/");
     eleventyConfig.addWatchTarget("./src/templates/");
     eleventyConfig.addWatchTarget("./src/utils");
